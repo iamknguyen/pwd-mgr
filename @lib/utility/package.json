@@ -1,0 +1,38 @@
+{
+  "name": "@lib/utility",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "test": "jest --verbose"
+  },
+  "author": "ACE",
+  "private": true,
+  "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "@types/jest": "^24.9.0",
+    "@types/yargs": "^15.0.10",
+    "aws-sdk": "^2.639.0",
+    "chalk": "^4.1.0",
+    "cross-env": "^6.0.3",
+    "dotenv": "^8.2.0",
+    "inquirer": "^7.3.3",
+    "jest": "24.9.0",
+    "node-emoji": "^1.10.0",
+    "rimraf": "3.0.0",
+    "simple-git": "^1.131.0",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^9.0.0",
+    "typescript": "3.8.3",
+    "yargs": "^16.1.1"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "js-cookie": "^2.2.1",
+    "lodash.clonedeep": "^4.5.0",
+    "uuid4": "^1.1.4"
+  }
+}

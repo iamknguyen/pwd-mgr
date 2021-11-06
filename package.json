@@ -1,0 +1,45 @@
+{
+  "name": "pwd-mgr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": "true",
+  "scripts": {
+    "clean": "yarn clean-build && yarn clean-modules",
+    "clean-modules": "rimraf node_modules **/node_modules */**/node_modules",
+    "clean-build": "rimraf **/dist **/build **/.aws-sam **/nexusiq",
+    "build": "yarn build-server && yarn build-web",
+    "build-web": "lerna run build --scope \"{@pwd-mgr/web,}\" --include-dependencies",
+    "build-server": "lerna run build --scope \"{@pwd-mgr/server,}\" --include-dependencies",
+    "build-lib": "lerna run build --scope \"{@lib/**,}\" --include-dependencies",
+    "test": "lerna run test"
+  },
+  "workspaces": {
+    "packages": [
+      "web",
+      "server",
+      "@lib/**"
+    ],
+    "nohoist": [
+      "**/babel-loader",
+      "**/babel-preset-react-app/@babel/runtime"
+    ]
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "husky": "4.2.5",
+    "lerna": "3.22.1",
+    "rimraf": "3.0.0",
+    "yarn": "1.22.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "CI=true yarn test"
+    }
+  },
+  "resolutions": {
+    "**/@types/react": "16.9.0"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "typeRoots": [
+      "type-overrides",
+      "node_modules/@types"
+    ]
+  }
+}
