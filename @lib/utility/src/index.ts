@@ -1,4 +1,3 @@
-export * from './clubDomainName';
 export * from './cloneFixture';
 export * from './Uuid';
 export * from './compose';
