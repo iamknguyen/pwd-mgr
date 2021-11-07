@@ -31,13 +31,18 @@ userRoutes(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, async() => {
+app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}.`);
   try {
-    const data = await DBService.addItem({id: 'something', email: 'somethingelse', password: 'something else'} as User)
+    const data = await DBService.addItem({
+      username: 'something',
+      email: 'somethingelse',
+      password: 'something else',
+      createdTime: Date.now().toString()
+    } as User)
     console.log('done', data)
   } catch (error) {
-    console.error('you suck', error)    
+    console.error('you suck', error)
   }
 });
 
@@ -57,12 +62,12 @@ function initial() {
     id: 1,
     name: "user"
   });
- 
+
   Role.create({
     id: 2,
     name: "moderator"
   });
- 
+
   Role.create({
     id: 3,
     name: "admin"

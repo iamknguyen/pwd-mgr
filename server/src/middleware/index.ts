@@ -6,7 +6,6 @@ import {
 } from './authJwt';
 import {
   checkDuplicateUsernameOrEmail,
-  checkRolesExisted
 } from './verifySignUp';
 export default {
   verifyToken,
@@ -14,5 +13,4 @@ export default {
   isModerator,
   isModeratorOrAdmin,
   checkDuplicateUsernameOrEmail,
-  checkRolesExisted
 };

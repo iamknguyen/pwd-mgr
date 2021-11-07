@@ -13,11 +13,10 @@ export default (app) => {
   app.post(
     "/api/auth/signup",
     [
-      middleware.checkDuplicateUsernameOrEmail,
-      middleware.checkRolesExisted
+      // middleware.checkDuplicateUsernameOrEmail,
+      // middleware.checkRolesExisted
     ],
     controller.signup
   );
 
-  app.post("/api/auth/signin", controller.signin);
 };
