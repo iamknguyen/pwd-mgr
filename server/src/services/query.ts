@@ -1,4 +1,4 @@
-import { docClient, tableKeys, TABLE_NAME } from "./DBService";
+import { docClient, tableKeys, USER_TABLE_NAME } from "./DBService";
 
 
 /**
@@ -7,7 +7,7 @@ import { docClient, tableKeys, TABLE_NAME } from "./DBService";
 export default async (email: string): Promise<any> => {
   const keysAsString = tableKeys.join(', ')
   let params = {
-    TableName: TABLE_NAME,
+    TableName: USER_TABLE_NAME,
     IndexName: "email-password-index",
     KeyConditionExpression: "email = :email",
     ExpressionAttributeValues: {

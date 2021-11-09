@@ -1,11 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-import { User } from "./models/user.model";
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
-import DBService from './services/DBService';
-import bcrypt from 'bcryptjs';
+import pwdRoutes from "./routes/pwd.routes";
 
 const app = express();
 var corsOptions = {
@@ -28,6 +26,7 @@ app.get("/", (req, res) => {
 
 // routes
 authRoutes(app);
+pwdRoutes(app);
 userRoutes(app);
 
 // set port, listen for requests

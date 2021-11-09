@@ -20,7 +20,8 @@ export const verifyToken = (req, res, next) => {
         message: "Unauthorized!"
       });
     }
-    req.userId = decoded.id;
+    req.userId = decoded.userId;
+    console.log('decoded userId', req.userId)
     next();
   });
 };

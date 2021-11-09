@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node build/app.js",
     "start:CI": "cross-env CI=true npm start",
+    "watch": "tsc -w & nodemon -q -w build build/app.js",
     "build": "webpack --mode=production",
     "build:dev": "cross-env CI=true webpack --mode=development",
     "test": "jest test --maxWorkers=50% --verbose"
@@ -22,8 +23,10 @@
     "@types/moment-timezone": "^0.5.12",
     "@types/node": "^9.4.6",
     "@types/sequelize": "^4.28.10",
+    "concurrently": "^6.3.0",
     "cross-env": "^5.2.0",
     "jest": "24.9.0",
+    "nodemon": "^2.0.14",
     "ts-jest": "25.2.1",
     "ts-loader": "^5.3.3",
     "webpack": "4.42.0",

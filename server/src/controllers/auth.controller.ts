@@ -1,4 +1,4 @@
-import DBService from "../services/DBService";
+import DBService, { USER_TABLE_NAME } from "../services/DBService";
 import { User } from "../models/user.model";
 import authConfig from "../config/auth.config";
 
@@ -27,7 +27,7 @@ const signup = async (req, res) => {
       createdTime: Date.now().toString()
     }
     console.log('about to add', user)
-    const data = await DBService.addItem(item)
+    const data = await DBService.addItem(item, USER_TABLE_NAME)
     res.json(data);
   } catch (error) {
     console.error('error in signup', error)

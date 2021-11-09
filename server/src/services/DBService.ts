@@ -13,9 +13,10 @@ AWS.config.update({
 });
 
 // Create DynamoDB document client
-export const TABLE_NAME = 'pwd-mgr-table'
+export const USER_TABLE_NAME = 'pwd-mgr-table'
+export const PWD_TABLE_NAME = 'usr-pwd-table'
 export const defaultParams = {
-  TableName: TABLE_NAME
+  TableName: USER_TABLE_NAME
 };
 export const tableKeys = [
   'userId',
