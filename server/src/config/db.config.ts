@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 dotenv.config();
-console.log('env', process.env)
 export default {
   HOST: "localhost",
   USER: "postgres",
@@ -23,6 +22,6 @@ export default {
       accessKeyId: process.env.AWS_KEY,
       secretAccessKey:  process.env.AWS_SECRET
     },
-    aws_table_name: 'pwd-table'
+    aws_table_name: 'pwd-mgr-table'
   }
 };

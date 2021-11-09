@@ -5,6 +5,7 @@ import { User } from "./models/user.model";
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import DBService from './services/DBService';
+import bcrypt from 'bcryptjs';
 
 const app = express();
 var corsOptions = {
@@ -33,44 +34,4 @@ userRoutes(app);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}.`);
-  try {
-    const data = await DBService.addItem({
-      username: 'something',
-      email: 'somethingelse',
-      password: 'something else',
-      createdTime: Date.now().toString()
-    } as User)
-    console.log('done', data)
-  } catch (error) {
-    console.error('you suck', error)
-  }
 });
-
-/**
- * TO DO
-import db from "./models/index";
-const Role = db.role;
-
-// db.sequelize.sync();
-// force: true will drop the table if it already exists
-db.sequelize.sync({force: true}).then(() => {
-  console.log('Drop and Resync Database with { force: true }');
-  initial();
-});
-function initial() {
-  Role.create({
-    id: 1,
-    name: "user"
-  });
-
-  Role.create({
-    id: 2,
-    name: "moderator"
-  });
-
-  Role.create({
-    id: 3,
-    name: "admin"
-  });
-}
- */

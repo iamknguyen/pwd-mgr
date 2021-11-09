@@ -12,8 +12,8 @@ export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
     console.log('about to do things', req.body)
     const item = await DBService.getItem('email', userItem.email);
     console.log('item: ', item);
-    const username = await DBService.getItem('username', userItem.username);
-    console.log('username: ', username);
+    // const username = await DBService.getItem('username', userItem.username);
+    // console.log('username: ', username);
   } catch (error) {
     res.status(400).json(error)
   }

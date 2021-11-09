@@ -1,5 +1,6 @@
 import DBService from "../services/DBService";
 import { User } from "../models/user.model";
+import authConfig from "../config/auth.config";
 
 // const db = require("../models");
 const config = require("../config/auth.config");
@@ -7,16 +8,23 @@ const config = require("../config/auth.config");
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+var CUSTOMEPOCH = 1300000000000; // artificial epoch
+function generateRowId(shardId /* range 0-64 for shard/slot */) {
+  var ts = new Date().getTime() - CUSTOMEPOCH; // limit to recent
+  var randid = Math.floor(Math.random() * 512);
+  ts = (ts * 64);   // bit-shift << 6
+  ts = ts + shardId;
+  return (ts * 512) + randid;
+}
 
 const signup = async (req, res) => {
   try {
     const user: User = req.body;
-    user.createdTime = new Date().toString()
     const item = {
-      username: user.username,
+      userId:  "user:" + generateRowId(4),
       email: user.email,
       password: bcrypt.hashSync(user.password, 8),
-      createdTime: Date.toString()
+      createdTime: Date.now().toString()
     }
     console.log('about to add', user)
     const data = await DBService.addItem(item)
@@ -30,12 +38,14 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
   try {
-    if (!req.params.username) throw "Missing username"
-    const items = await DBService.getItem('username', req.body.username);
-
+    if (!req.body.email) throw "Missing email"
+    const items = await DBService.query(req.body.email);
+    console.info('user loggin in', items)
+    const { userId, email, password } = items[0]
+    console.log({ userId, email, password }, req.body)
     const passwordIsValid = bcrypt.compareSync(
       req.body.password,
-      items.password
+      password
     );
     if (!passwordIsValid) {
       return res.status(401).send({
@@ -43,64 +53,20 @@ const signin = async (req, res) => {
         message: "Invalid Password!"
       });
     }
-    var token = jwt.sign({ id: items.id }, config.secret, {
+    var token = jwt.sign({ userId }, authConfig.secret, {
       expiresIn: 86400 // 24 hours
     });
 
     res.status(200).send({
-      id: items.id,
-      username: items.username,
-      email: items.email,
+      userId,
+      email,
       accessToken: token
     });
 
   } catch (error) {
+    console.error(error)
     res.status(400).json(error)
   }
-
-  // User.findOne({
-  //   where: {
-  //     username: req.body.username
-  //   }
-  // })
-  //   .then(user => {
-  //     if (!user) {
-  //       return res.status(404).send({ message: "User Not found." });
-  //     }
-
-  //     var passwordIsValid = bcrypt.compareSync(
-  //       req.body.password,
-  //       user.password
-  //     );
-
-  //     if (!passwordIsValid) {
-  //       return res.status(401).send({
-  //         accessToken: null,
-  //         message: "Invalid Password!"
-  //       });
-  //     }
-
-  //     var token = jwt.sign({ id: user.id }, config.secret, {
-  //       expiresIn: 86400 // 24 hours
-  //     });
-
-  //     var authorities = [];
-  //     user.getRoles().then(roles => {
-  //       for (let i = 0; i < roles.length; i++) {
-  //         authorities.push("ROLE_" + roles[i].name.toUpperCase());
-  //       }
-  //       res.status(200).send({
-  //         id: user.id,
-  //         username: user.username,
-  //         email: user.email,
-  //         roles: authorities,
-  //         accessToken: token
-  //       });
-  //     });
-  //   })
-  //   .catch(err => {
-  //     res.status(500).send({ message: err.message });
-  //   });
 };
 
 export default {
