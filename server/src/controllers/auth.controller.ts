@@ -5,7 +5,6 @@ import dbConfig from "../config/db.config";
 import AWS from "aws-sdk";
 
 // const db = require("../models");
-const config = require("../config/auth.config");
 // const Role = db.role;
 
 var jwt = require("jsonwebtoken");
@@ -43,7 +42,7 @@ const signin = async (req, res) => {
     console.log('attempting to login', req.body)
     console.log('db config', dbConfig.AWS)
     AWS.config.update({
-      ...config.AWS.aws_remote_config,
+      ...dbConfig.AWS.aws_remote_config,
     });
     console.log('aws config', AWS.config)
     if (!req.body.email) throw "Missing email"
