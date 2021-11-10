@@ -6,7 +6,7 @@ A password manager written in typescript, node, react with a dynamo db
 - [Password Manager](#password-manager)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
-  - [Usage](#usage)
+  - [Starting server](#starting-server)
   - [Support](#support)
   - [Contributing](#contributing)
 
@@ -20,7 +20,14 @@ yarn build
 ```
 *Note that this project is using yarn workspaces so yarn is required
 
-## Usage
+## Starting server
+After building, start the server 
+
+```
+yarn start-server
+```
+[and go to localhost:8080/app](http://localhost:8080/app)
+sign up, log in and go to the passwords tab to view your passwords
 
 
 ## Support
