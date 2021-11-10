@@ -15,6 +15,9 @@ import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 
 import EventBus from "./common/EventBus";
+import PasswordsList from "./components/PasswordList";
+import AddPassword from "./components/AddPassword";
+import Password from "./components/Password";
 
 type Props = {};
 
@@ -42,8 +45,8 @@ class App extends Component<Props, State> {
     if (user) {
       this.setState({
         currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
-        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+        showModeratorBoard: user.roles?.includes("ROLE_MODERATOR"),
+        showAdminBoard: user.roles?.includes("ROLE_ADMIN"),
       });
     }
 
@@ -102,6 +105,20 @@ class App extends Component<Props, State> {
                 </Link>
               </li>
             )}
+            {currentUser && (
+              <li className="nav-item">
+                <Link to={"/passwords"} className="nav-link">
+                  Passwords
+                </Link>
+              </li>
+            )}
+            {currentUser && (
+              <li className="nav-item">
+                <Link to={"/add"} className="nav-link">
+                  Add Password
+                </Link>
+              </li>
+            )}
           </div>
 
           {currentUser ? (
@@ -140,6 +157,9 @@ class App extends Component<Props, State> {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path={["/", "/passwords"]} component={PasswordsList} />
+            <Route exact path="/add" component={AddPassword} />
+            <Route path="/passwords/:id" component={Password} />
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />

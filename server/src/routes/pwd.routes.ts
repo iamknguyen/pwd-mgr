@@ -10,8 +10,8 @@ export default (app) => {
     next();
   });
 
-  app.post(
-    "/api/pwd/getPassword",
+  app.get(
+    "/api/pwd/all",
     [middleware.verifyToken],
     pwdController.getPwd
   );

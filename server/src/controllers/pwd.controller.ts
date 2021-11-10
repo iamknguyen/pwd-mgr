@@ -63,7 +63,8 @@ const removePwd = async (req, res) => {
 const getPwd = async (req, res) => {
   try {
     const { userId } = req;
-    if (!req.body.appName) throw "Missing appName"
+    console.log('getting passwords for', userId)
+    // if (!req.body.appName) throw "Missing appName"
     let params = {
       TableName: PWD_TABLE_NAME,
       KeyConditionExpression: "userId = :userId",
@@ -81,8 +82,11 @@ const getPwd = async (req, res) => {
     })
     console.log('got password', data)
 
+    // res.status(200).send({
+    //   password: cryptr.decrypt(data[0].password),
+    // });
     res.status(200).send({
-      password: cryptr.decrypt(data[0].password),
+      data: data
     });
 
   } catch (error) {
