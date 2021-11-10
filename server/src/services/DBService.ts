@@ -4,11 +4,12 @@ import getItem from './getItem'
 import deleteItem from './deleteItem'
 import query from './query'
 import addItem from './addItem'
-import config from '../config/db.config'
+import dbConfig from "../config/db.config"
+
 dotenv.config();
 // Set the region 
 AWS.config.update({
-  ...config.AWS.aws_remote_config,
+  ...dbConfig.AWS.aws_remote_config,
   // endpoint: 'http://localhost:8080',
 });
 
@@ -24,10 +25,10 @@ export const tableKeys = [
   'password',
   'createdTime',
 ]
-export const docClient = new AWS.DynamoDB.DocumentClient();
+export const docClient = new AWS.DynamoDB.DocumentClient({...dbConfig.AWS.aws_remote_config});
 export default {
-  getItem: getItem,
-  addItem: addItem,
-  deleteItem: deleteItem,
-  query: query,
+  getItem,
+  addItem,
+  deleteItem,
+  query,
 }

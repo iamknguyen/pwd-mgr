@@ -41,9 +41,6 @@ const signin = async (req, res) => {
   try {
     console.log('attempting to login', req.body)
     console.log('db config', dbConfig.AWS)
-    AWS.config.update({
-      ...dbConfig.AWS.aws_remote_config,
-    });
     console.log('aws config', AWS.config)
     if (!req.body.email) throw "Missing email"
     const items = await DBService.query(req.body.email);
