@@ -95,8 +95,42 @@ const getPwd = async (req, res) => {
   }
 };
 
+const getOnePwd = async (req, res) => {
+  try {
+    const { userId } = req;
+    console.log('getting passwords for', userId, req.params.appName)
+    // if (!req.body.appName) throw "Missing appName"
+    let params = {
+      TableName: PWD_TABLE_NAME,
+      KeyConditionExpression: "userId = :userId",
+      ExpressionAttributeValues: {
+        ":userId": userId
+      },
+      ProjectionExpression: 'userId, appName, password'
+    }
+    let result = [];
+    const request = docClient.query(params).promise();
+
+    const data = await request.then(function (data) {
+      result = [...data.Items];
+      return result;
+    })
+    let obj = data.find(o => o.appName ===  req.params.appName);
+    console.log('filtered item', obj)
+    res.status(200).send({
+      password: cryptr.decrypt(obj.password),
+    });
+
+
+  } catch (error) {
+    console.error(error)
+    res.status(400).json(error)
+  }
+};
+
 export default {
   removePwd,
   getPwd,
+  getOnePwd,
   addPwd
 }

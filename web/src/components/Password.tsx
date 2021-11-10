@@ -11,20 +11,20 @@ const Password = props => {
   const [currentPassword, setCurrentPassword] = useState(initialPasswordState);
   const [message, setMessage] = useState("");
 
-  // const getPassword = id => {
-  //   PasswordDataService.(id)
-  //     .then(response => {
-  //       setCurrentPassword(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch(e => {
-  //       console.log(e);
-  //     });
-  // };
+  const getPassword = id => {
+    PasswordDataService.get(id)
+      .then(response => {
+        setCurrentPassword({...currentPassword, id, appName: id, passKey: response.data.password});
+        console.log(response.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
   useEffect(() => {
     console.log('TODO', props.match.params)
-    // getPassword(props.match.params.id);
+    getPassword(props.match.params.id);
   }, [props.match.params.id]);
 
   const handleInputChange = event => {

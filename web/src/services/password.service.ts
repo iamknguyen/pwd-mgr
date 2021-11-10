@@ -10,6 +10,10 @@ class PasswordService {
     return axios.get(API_URL + '/all', { headers: authHeader() });
   }
 
+  get(appName: string) {
+    return axios.get(API_URL + `/app/${appName}`, { headers: authHeader() });
+  }
+
   add(data: { appName: string, password: string }) {
     return axios.post(API_URL + '/user', data, { headers: authHeader() });
   }

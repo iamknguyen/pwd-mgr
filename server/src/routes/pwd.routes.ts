@@ -16,6 +16,12 @@ export default (app) => {
     pwdController.getPwd
   );
 
+  app.get(
+    "/api/pwd/app/:appName",
+    [middleware.verifyToken],
+    pwdController.getOnePwd
+  );
+
   app.post(
     "/api/pwd/user",
     [middleware.verifyToken],
