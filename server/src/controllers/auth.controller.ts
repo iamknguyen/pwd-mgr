@@ -1,6 +1,7 @@
 import DBService, { USER_TABLE_NAME } from "../services/DBService";
 import { User } from "../models/user.model";
 import authConfig from "../config/auth.config";
+import dbConfig from "../config/db.config";
 
 // const db = require("../models");
 const config = require("../config/auth.config");
@@ -38,6 +39,8 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
   try {
+    console.log('attempting to login', req.body)
+    console.log('db config', dbConfig.AWS)
     if (!req.body.email) throw "Missing email"
     const items = await DBService.query(req.body.email);
     console.info('user loggin in', items)
