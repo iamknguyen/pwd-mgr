@@ -1,6 +1,7 @@
 import axios from "axios";
+import { ROOT_URL } from "./endpoints";
 
-const API_URL = "http://localhost:8080/api/auth/";
+const API_URL = `${ROOT_URL}/api/auth/`;
 
 class AuthService {
   login(email: string, password: string) {

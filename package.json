@@ -8,8 +8,9 @@
     "clean": "yarn clean-build && yarn clean-modules",
     "clean-modules": "rimraf node_modules **/node_modules */**/node_modules",
     "clean-build": "rimraf **/dist **/build **/.aws-sam **/nexusiq",
-    "start-server": "nodemon server/build/app.js",
-    "build": "yarn build-server && yarn build-web && yarn copyfiles",
+    "start-server": "yarn workspace @pwd-mgr/server start",
+    "start-dev": "concurrently yarn workspace @pwd-mgr/web start && nodemon server/build/app.js",
+    "build": "yarn build-web && yarn copyfiles && yarn build-server",
     "build-web": "lerna run build --scope \"{@pwd-mgr/web,}\" --include-dependencies",
     "build-server": "lerna run build --scope \"{@pwd-mgr/server,}\" --include-dependencies",
     "build-lib": "lerna run build --scope \"{@lib/**,}\" --include-dependencies",
@@ -28,7 +29,9 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^6.3.0",
     "dotenv": "^8.2.0",
+    "nodemon": "^2.0.15",
     "husky": "4.2.5",
     "lerna": "3.22.1",
     "rimraf": "3.0.0",
@@ -43,8 +46,5 @@
     "**/@types/react": "16.9.0"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "nodemon": "^2.0.15"
-  }
+  "license": "ISC"
 }

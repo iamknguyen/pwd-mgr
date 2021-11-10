@@ -6,7 +6,8 @@
     "start": "node build/app.js",
     "start:CI": "cross-env CI=true npm start",
     "watch": "tsc -w & nodemon -q -w build build/app.js",
-    "build": "webpack --mode=production",
+    "build": "tsc",
+    "webpack": "webpack --mode=production",
     "build:dev": "cross-env CI=true webpack --mode=development",
     "test": "jest test --maxWorkers=50% --verbose"
   },
