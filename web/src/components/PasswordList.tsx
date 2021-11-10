@@ -6,17 +6,16 @@ const PasswordsList = (props) => {
   const [passwords, setPasswords] = useState([]);
   const [searchAppName, setSearchAppName] = useState("");
 
-  const passwordsRef = passwords || [];
 
   useEffect(() => {
     retrievePasswords();
   }, []);
 
   const retrievePasswords = () => {
-    PasswordDataService.getAll()
-      .then((response) => {
-        console.log('response', response)
-        setPasswords(response.data.data);
+    return PasswordDataService.getAll()
+      .then(async (response) => {
+        await setPasswords(response.data.data);
+        return response.data.data;
       })
       .catch((e) => {
         console.log(e);
@@ -34,20 +33,27 @@ const PasswordsList = (props) => {
     //   });
   };
 
-  const openPassword = (rowIndex) => {
-    const id = passwordsRef[rowIndex].id;
-
-    props.history.push("/passwords/" + id);
+  const openPassword = async (rowIndex) => {
+    if (!passwords?.length) {
+      const newList = await retrievePasswords()
+      console.log('got it', newList, rowIndex)
+      const appName = newList[rowIndex]?.appName;
+      if (appName) { props.history.push("/passwords/" + appName); }
+    } else {
+      const appName = passwords[rowIndex]?.appName;
+      if (appName) { props.history.push("/passwords/" + appName); }
+      else { console.error('no app', passwords)}
+    }
   };
 
   const deletePassword = (rowIndex) => {
-    const id = passwordsRef[rowIndex].id;
+    const id = passwords[rowIndex].id;
 
     PasswordDataService.remove(id)
       .then((response) => {
         props.history.push("/passwords");
 
-        let newPasswords = [...passwordsRef];
+        let newPasswords = [...passwords];
         newPasswords.splice(rowIndex, 1);
 
         setPasswords(newPasswords);

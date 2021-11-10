@@ -23,7 +23,7 @@ const Password = props => {
   // };
 
   useEffect(() => {
-    console.log('TODO')
+    console.log('TODO', props.match.params)
     // getPassword(props.match.params.id);
   }, [props.match.params.id]);
 
@@ -102,12 +102,6 @@ const Password = props => {
               />
             </div>
 
-            <div className="form-group">
-              <label>
-                <strong>Status:</strong>
-              </label>
-              {currentPassword.published ? "Published" : "Pending"}
-            </div>
           </form>
 
           {currentPassword.published ? (
