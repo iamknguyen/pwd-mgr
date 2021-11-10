@@ -4,7 +4,7 @@ const cors = require("cors");
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import pwdRoutes from "./routes/pwd.routes";
-
+const path = require("path");
 const app = express();
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -19,15 +19,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome." });
-});
 
 // routes
 authRoutes(app);
 pwdRoutes(app);
 userRoutes(app);
+// simple route
+app.use(express.static(path.join(__dirname, "..", "build")));
+app.use(express.static("public"));
+/* GET home page. */
+app.get('/', function (req, res, next) {
+  res.json({ message: "Welcome to the password manager!" });
+});
+/* GET React App */
+app.get(['/app', '/app/*'], function (req, res, next) {
+  console.log('serving', path.join(__dirname, '../public', 'app.html'))
+  res.sendFile(path.join(__dirname, '../public', 'app.html'));
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

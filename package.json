@@ -9,11 +9,12 @@
     "clean-modules": "rimraf node_modules **/node_modules */**/node_modules",
     "clean-build": "rimraf **/dist **/build **/.aws-sam **/nexusiq",
     "start-server": "nodemon server/build/app.js",
-    "build": "yarn build-server && yarn build-web",
+    "build": "yarn build-server && yarn build-web && yarn copyfiles",
     "build-web": "lerna run build --scope \"{@pwd-mgr/web,}\" --include-dependencies",
     "build-server": "lerna run build --scope \"{@pwd-mgr/server,}\" --include-dependencies",
     "build-lib": "lerna run build --scope \"{@lib/**,}\" --include-dependencies",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "copyfiles": "cd web && cd .. && cp -R web/build/ server/public/ && mv server/public/index.html server/public/app.html"
   },
   "workspaces": {
     "packages": [
