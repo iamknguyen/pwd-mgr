@@ -8,6 +8,7 @@
     "clean": "yarn clean-build && yarn clean-modules",
     "clean-modules": "rimraf node_modules **/node_modules */**/node_modules",
     "clean-build": "rimraf **/dist **/build **/.aws-sam **/nexusiq",
+    "start-server": "nodemon server/build/app.js",
     "build": "yarn build-server && yarn build-web",
     "build-web": "lerna run build --scope \"{@pwd-mgr/web,}\" --include-dependencies",
     "build-server": "lerna run build --scope \"{@pwd-mgr/server,}\" --include-dependencies",
@@ -41,5 +42,8 @@
     "**/@types/react": "16.9.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.15"
+  }
 }
